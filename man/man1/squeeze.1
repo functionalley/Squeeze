@@ -1,0 +1,156 @@
+.TH squeeze 1
+.SH NAME
+\fBsqueeze\fR - Finds the best subset, of the specified files, which fits into a given space.
+.SH SYNOPSIS
+\fBsqueeze\fR [\fIOPTIONS\fR] [\fIFile-path\fR ...]
+.SH DESCRIPTION
+.PP
+Finds the subset of the specified \fIFile-path\fRs, which fits into the specified space with least room to spare, whilst also meeting the minimum usage-requirements;
+i.e. a degenerate instance of the "0-1 Knapsack-problem".
+.PP
+Any directories amongst the specified \fIFile-path\fRs are treated as atomic units, & therefore only solutions which involve either all or none of the files contained, are returned.
+.PP
+Because of its exponential time-complexity, solutions of increasing suitability are produced lazily,
+rather than waiting until the optimal solution is known (which might take an inordinately long time).
+.SH OPTIONS
+.TP
+\fB--verbosity=\fR(\fBSilent\fR|\fBNormal\fR|\fBVerbose\fR|\fBDeafening\fR)
+Produces additional explanatory output where appropriate.
+.br
+CAVEAT: to be effective, this option must precede others.
+.SS "Generic Program-information"
+.TP
+\fB-v\fR, \fB--version\fR
+Outputs version-information, & then exits.
+.TP
+\fB-?\fR, \fB--help\fR
+Displays help, & then exits.
+.SS "Selection"
+.TP
+\fB-M\fR \fIBytes\fR, \fB--maximumBytes=\fR\fIBytes\fR
+Defines the maximum available space, in bytes; defaulting to the space available on a DVD, i.e. \fB4700000000\fR bytes.
+.TP
+\fB-m\fR \fIFloat\fR, \fB--minimumUsageRatio='\fR\fIFloat\fR\fB'\fR
+Defines the minimum acceptable usage-ratio (in the closed unit-interval [0,1]); defaulting to '\fB0.99\fR', i.e. 99% of \fBmaximumBytes\fR.
+.TP
+\fB-z\fR[\fIBool\fR], \fB--includeEmpty\fR[\fB=\fR\fIBool\fR]
+When "\fBTrue\fR", any empty file or directory, can be a member of all solutions.
+.br
+The default value, in the absence of this option, is "\fBFalse\fR",
+but in the absence of only the boolean argument, "\fBTrue\fR" will be inferred.
+.br
+CAVEAT: for \fIn\fR such files or directories, a factor of \fI2^n\fR times more viable solutions exist, obscuring the minimal solutions on which they're based.
+.SS Test
+.TP
+\fB-r\fR[\fIInt\fR], \fB--randomSeed\fR[\fB=\fR\fIInt\fR]
+This option takes an optional integral argument with which to seed the unique random-number generator used for all random operations.
+.br
+In the absence of this option, the random-number generator will be seeded unpredictably from the operating-system,
+but in the absence of only the integral argument, "\fB0\fR" will be inferred.
+.br
+CAVEAT: to be effective, this option must precede either "\fBtestPerformanceContinuous\fR" or "\fBtestPerformanceDiscrete\fR".
+.TP
+\fB--testPerformanceContinuous='(\fR\fIInteger\fR\fB,\fR \fBLogNormalDistribution\fR \fIlocation\fR \fIscale^2\fR\fB)'\fR
+Measures the CPU-time required to find the best fit,
+for the specified number of randomly generated virtual files,
+the size of which conform to the specified continuous probability-distribution; & then exits.
+.br
+"\fIA Large-Scale Study of File-System Contents by John R. Douceur and William J. Bolosky\fR" concludes that for arbitrary file-types,
+the frequency of file-sizes matches this distribution.
+.TP
+\fB--testPerformanceDiscrete='(\fR\fIInteger\fR\fB,\fR \fBPoissonDistribution\fR \fIlambda\fR\fB)'\fR
+Measures the CPU-time required to find the best fit,
+for the specified number of randomly generated virtual files,
+the size of which conform to the specified discrete probability-distribution; & then exits.
+.br
+CAVEAT: the standard-deviation for this distribution is narrower than observed.
+.SS File-paths
+.TP
+If \fIFile-path\fR is a single hyphen-minus ("\fB-\fR"), then the list of file-paths will be read from standard-input.
+.SH EXIT-STATUS
+\fB0\fR on success, & >\fB0\fR if an error occurs.
+.SH EXAMPLES
+.SS Example 1
+Say we've a directory of audio-files, categorised by artist.
+.IP
+.B ls -p
+.nf
+	ArabStrap/ BobDylan/ JeffBuckley/ JohnMartyn/ JoniMitchell/ ReservoirDogsOST/
+	RichardThompson/ SethLakeman/ SusheelaRaman/ TeddyThompson/ Vangelis/
+.fi
+.PP
+We want to find which combinations can be stored on a CD without wasting inordinate amounts of space.
+.IP
+.B squeeze -M 700000000 -m 0.999 *
+.nf
+	699871313	["BobDylan","RichardThompson","SethLakeman","TeddyThompson"]
+	699893320	["ArabStrap","BobDylan","JeffBuckley","JohnMartyn","SethLakeman","SusheelaRaman"]
+	\fI699998310\fR	["ArabStrap","BobDylan","JoniMitchell","ReservoirDogsOST","SethLakeman","TeddyThompson","Vangelis"]
+.fi
+.PP 
+Note that the proposed solutions don't split any of the directories, into their constituent files.
+.PP
+We can confirm the validity of the optimal result:
+.IP
+.B find ArabStrap BobDylan JoniMitchell ReservoirDogsOST SethLakeman TeddyThompson Vangelis -type f -print | perl -e 'use List::Util qw(sum); printf(qq(%d\\n), sum map { chomp; (stat)[7] } <>);'
+.nf
+	699998310
+.fi
+.PP
+N.B.: "\fBdu\fR" will return a slightly larger size, since it includes the space required for directory-structures.
+.SS Example 2
+We can improve on that result if we're prepared to split some of the artist-specific directories into individual albums.
+With the expectation of more solutions from which to select, we'll also raise the bar for what is acceptable.
+.br
+N.B.: from version \fB1.0.3.0\fR, the runtime can be passed a "\fB-N\fR" flag to request parallel execution on multiple cores,
+which as a side-effect, alters the selection of sub-optimal solutions to return.
+Whether this option actually results in reduced execution-time, depends on the file-size frequency-distribution & on the available hardware.
+.IP
+.B squeeze -M 700000000 -m 0.99999 ArabStrap BobDylan/* JeffBuckley JohnMartyn JoniMitchell ReservoirDogsOST RichardThompson SethLakeman SusheelaRaman TeddyThompson Vangelis +RTS -N
+.nf
+	699995815	["ArabStrap","BobDylan/BlondeOnBlonde","BobDylan/Highway61Revisited","BobDylan/ModernTimes","BobDylan/StreetLegal","BobDylan/SubterraneanHomesickBlues","JoniMitchell","RichardThompson","SusheelaRaman","TeddyThompson","Vangelis"]
+	699998578	["BobDylan/Desire","BobDylan/Highway61Revisited","BobDylan/Infidels","BobDylan/StreetLegal","JeffBuckley","JohnMartyn","JoniMitchell","RichardThompson","SethLakeman","SusheelaRaman","TeddyThompson","Vangelis"]
+	\fI699999112\fR	["BobDylan/BlondeOnBlonde","BobDylan/Desire","BobDylan/Highway61Revisited","BobDylan/Infidels","BobDylan/ModernTimes","JeffBuckley","JohnMartyn","ReservoirDogsOST","RichardThompson","SusheelaRaman","TeddyThompson","Vangelis"]
+.fi
+.SS Example 3
+If we're prepared to add individual files from another artist:
+.IP
+.B squeeze -M 700000000 -m 0.9999999 ArabStrap BobDylan/* JeffBuckley JohnMartyn JoniMitchell ReservoirDogsOST $(find RichardThompson -type f) SethLakeman SusheelaRaman TeddyThompson Vangelis +RTS -N
+.nf
+	699999964	["ArabStrap","BobDylan/Desire","BobDylan/Infidels","BobDylan/ModernTimes","BobDylan/OhMercy","BobDylan/SubterraneanHomesickBlues","BobDylan/TimeOutOfMind","JeffBuckley","JohnMartyn","JoniMitchell","ReservoirDogsOST","RichardThompson/FrontParlourBallads/RichardThompson-06-MySoulMySoul.ogg","RichardThompson/RumorAndSigh/RichardThompson-12-MotherKnowsBest.ogg","RichardThompson/TheOldKitBag/RichardThompson-01-Gethsemane.ogg","RichardThompson/TheOldKitBag/RichardThompson-11-OutsideOfTheInside.ogg","SethLakeman","SusheelaRaman","TeddyThompson","Vangelis"]
+	699999987	["BobDylan/BlondeOnBlonde","BobDylan/BloodOnTheTracks","BobDylan/Desire","BobDylan/ModernTimes","BobDylan/OhMercy","BobDylan/StreetLegal","BobDylan/SubterraneanHomesickBlues","BobDylan/TimeOutOfMind","JoniMitchell","ReservoirDogsOST","RichardThompson/FrontParlourBallads/RichardThompson-01-LetItBlow.ogg","RichardThompson/IWantToSeeTheBrightLightsTonight/RichardAndLindaThompson-13-TheCalvaryCross[Live-Bonus].ogg","RichardThompson/TheOldKitBag/RichardThompson-01-Gethsemane.ogg","RichardThompson/TheOldKitBag/RichardThompson-06-FirstBreath.ogg","RichardThompson/TheOldKitBag/RichardThompson-11-OutsideOfTheInside.ogg","SethLakeman","SusheelaRaman","TeddyThompson","Vangelis"]
+	\fI700000000\fR	["ArabStrap","BobDylan/Desire","BobDylan/Highway61Revisited","BobDylan/Infidels","BobDylan/ModernTimes","BobDylan/StreetLegal","BobDylan/SubterraneanHomesickBlues","BobDylan/TimeOutOfMind","JeffBuckley","JoniMitchell","ReservoirDogsOST","RichardThompson/FrontParlourBallads/RichardThompson-01-LetItBlow.ogg","RichardThompson/RumorAndSigh/RichardThompson-08-BacklashLoveAffair.ogg","RichardThompson/RumorAndSigh/RichardThompson-12-MotherKnowsBest.ogg","RichardThompson/TheOldKitBag/RichardThompson-01-Gethsemane.ogg","RichardThompson/TheOldKitBag/RichardThompson-04-ALoveYouCantSurvive.ogg","RichardThompson/TheOldKitBag/RichardThompson-06-FirstBreath.ogg","SusheelaRaman","TeddyThompson","Vangelis"]
+.fi
+.PP
+.B ^C
+.PP
+The exact match isn't unexpected, given the 2^71 possible combinations.
+The process was terminated after this solution was found, though where time permits, one may choose to wait for alternative exact matches.
+.SH AUTHOR
+Written by Dr. Alistair Ward.
+.SH BUGS
+.SS "REPORTING BUGS"
+Report bugs to <\fBsqueeze@functionalley.eu\fR>.
+.SH COPYRIGHT
+Copyright \(co 2010-2015 Dr. Alistair Ward
+.PP
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+.PP
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+.PP
+You should have received a copy of the GNU General Public License along with this program. If not, see \fB<http://www.gnu.org/licenses/>\fR.
+.SH "SEE ALSO"
+.IP \(bu
+Home-page: \fBhttp://functionalley.eu/Squeeze/squeeze.html\fR
+.IP \(bu
+.B http://hackage.haskell.org/package/squeeze
+.IP \(bu
+.B https://github.com/functionalley/Squeeze
+.IP \(bu
+Source-documentation is generated by "\fBHaddock\fR", & is available in the distribution.
+.IP \(bu
+.B http://www.haskell.org/haddock/
+.IP \(bu
+.B http://en.wikipedia.org/wiki/Log-normal_distribution
+.IP \(bu
+.B http://en.wikipedia.org/wiki/Poisson_distribution
