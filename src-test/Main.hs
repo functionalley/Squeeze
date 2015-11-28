@@ -24,7 +24,6 @@
 
 module Main(main) where
 
-import			Control.Arrow((***))
 import qualified	Control.Monad
 import qualified	Squeeze.Test.Data.FileCombinations	as Test.Data.FileCombinations
 import qualified	Squeeze.Test.Squeeze			as Test.Squeeze
@@ -34,12 +33,8 @@ import qualified	ToolShed.Test.QuickCheck.Result
 -- | Entry-point.
 main :: IO ()
 main	= mapM_ (
-	snd {-exit-status-} . (
-		putStrLn . (++ ":") *** (
-			>>= (`Control.Monad.unless` System.Exit.exitFailure) . all ToolShed.Test.QuickCheck.Result.isSuccessful
-		)
-	)
+	(`Control.Monad.unless` System.Exit.exitFailure) . all ToolShed.Test.QuickCheck.Result.isSuccessful =<<
  ) [
-	("Data.FileCombinations",	Test.Data.FileCombinations.results),
-	("Squeeze",			Test.Squeeze.results)
+	Test.Data.FileCombinations.results,
+	Test.Squeeze.results
  ]
