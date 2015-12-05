@@ -1,5 +1,7 @@
 # **Squeeze**
 
+[![Build Status](https://travis-ci.org/functionalley/Squeeze.svg?branch=master)](https://travis-ci.org/functionalley/Squeeze)
+
 This is "**Squeeze**", an application which searches for combinations of the specified files to store in a given space,
 without wasting an unacceptable proportion.
 
