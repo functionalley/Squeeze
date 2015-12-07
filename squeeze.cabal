@@ -32,6 +32,7 @@ Bug-reports:	mailto:squeeze@functionalley.eu
 
 -- None of these files are needed at run-time.
 Extra-source-files:
+    .ghci
     changelog.markdown
     changelog.Debian
     copyright
