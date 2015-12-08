@@ -32,6 +32,7 @@ module Main(main) where
 
 import qualified	Control.Monad
 import qualified	Control.Monad.Writer
+import qualified	Data.Default
 import qualified	Data.List
 import qualified	Data.Maybe
 import qualified	Data.Version
@@ -54,7 +55,6 @@ import qualified	System.IO
 import qualified	System.IO.Error
 import qualified	Text.Printf
 import qualified	ToolShed.Data.List
-import qualified	ToolShed.Defaultable
 import qualified	ToolShed.SelfValidate
 import qualified	ToolShed.System.TimeAction
 
@@ -104,7 +104,7 @@ main	= do
 
 	let
 		defaultCommandOptions :: CommandOptions'
-		defaultCommandOptions	= ToolShed.Defaultable.defaultValue
+		defaultCommandOptions	= Data.Default.def
 
 		defaultRandomSeed :: Int
 		defaultRandomSeed	= 0
@@ -200,7 +200,7 @@ main	= do
 	case G.getOpt G.RequireOrder optDescrList args of
 		(commandLineActions, nonOptions, [{-errors-}])	-> do
 			commandOptions	<- Data.List.foldl' (>>=) (
-				return {-to IO-monad-} ToolShed.Defaultable.defaultValue
+				return {-to IO-monad-} Data.Default.def
 			 ) {-transform using CommandLineAction-mutators-} commandLineActions	-- ie: do o1 <- CommandLineAction[0] commandOptions[0]; o2 <- CommandLineAction[1] o1; ...
 
 			if not $ ToolShed.SelfValidate.isValid commandOptions

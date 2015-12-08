@@ -1,5 +1,5 @@
 {-
-	Copyright (C) 2010-2014 Dr. Alistair Ward
+	Copyright (C) 2010-2015 Dr. Alistair Ward
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -46,10 +46,10 @@ module Squeeze.Data.CommandOptions(
 ) where
 
 import			Control.Arrow((&&&))
+import qualified	Data.Default
 import qualified	Distribution.Verbosity
 import qualified	Factory.Data.Interval
 import qualified	Squeeze.Data.File	as Data.File
-import qualified	ToolShed.Defaultable
 import qualified	ToolShed.SelfValidate
 
 -- | Declares a record to contain command-line options.
@@ -61,8 +61,8 @@ data CommandOptions ratio	= MkCommandOptions {
 	getVerbosity		:: Distribution.Verbosity.Verbosity	-- ^ Set the threshold for ancillary information-output.
 } deriving (Eq, Show)
 
-instance Fractional f => ToolShed.Defaultable.Defaultable (CommandOptions f)	where
-	defaultValue	= MkCommandOptions {
+instance Fractional f => Data.Default.Default (CommandOptions f)	where
+	def = MkCommandOptions {
 		getIncludeEmpty		= False,
 		getMaximumBytes		= 4700000000,	-- DVD-size; just under 4.4GiB.
 		getMaybeRandomSeed	= Nothing,

@@ -73,12 +73,13 @@ Library
 
     Build-depends:
         base == 4.*,
+        data-default,
         Cabal >= 1.10,
         directory,
         factory >= 0.2.1.0,
         filepath,
         mtl,
-        toolshed >= 0.16
+        toolshed >= 0.17
 
     if impl(ghc >= 7.4.1)
         GHC-prof-options:	-prof -fprof-auto -fprof-cafs
@@ -101,12 +102,13 @@ Executable squeeze
     Build-depends:
         base == 4.*,
         Cabal >= 1.10,
+        data-default,
         factory >= 0.2.1.0,
         filepath,
         mtl,
         random,
         squeeze,
-        toolshed >= 0.16
+        toolshed >= 0.17
 
     if impl(ghc >= 7.4.1)
         GHC-prof-options:	-prof -fprof-auto -fprof-cafs
@@ -141,5 +143,5 @@ Test-Suite quickCheck
         factory >= 0.2.1.0,
         QuickCheck >= 2.4,
         squeeze,
-        toolshed >= 0.16
+        toolshed >= 0.17
 
