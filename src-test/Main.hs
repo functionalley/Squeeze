@@ -25,8 +25,8 @@
 module Main(main) where
 
 import qualified	Control.Monad
-import qualified	Squeeze.Test.Data.FileCombinations	as Test.Data.FileCombinations
-import qualified	Squeeze.Test.Squeeze			as Test.Squeeze
+import qualified	Squeeze.Test.QuickCheck.Data.FileCombinations	as Test.QuickCheck.Data.FileCombinations
+import qualified	Squeeze.Test.QuickCheck.Squeeze			as Test.QuickCheck.Squeeze
 import qualified	System.Exit
 import qualified	ToolShed.Test.QuickCheck.Result
 
@@ -35,6 +35,6 @@ main :: IO ()
 main	= mapM_ (
 	(`Control.Monad.unless` System.Exit.exitFailure) . all ToolShed.Test.QuickCheck.Result.isSuccessful =<<
  ) [
-	Test.Data.FileCombinations.results,
-	Test.Squeeze.results
+	Test.QuickCheck.Data.FileCombinations.results,
+	Test.QuickCheck.Squeeze.results
  ]

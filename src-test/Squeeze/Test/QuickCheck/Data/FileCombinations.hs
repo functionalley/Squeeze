@@ -21,7 +21,7 @@
  [@DESCRIPTION@]	Defines tests to dynamically verify the module "Squeeze.Data.FileCombinations" against arbitrary data.
 -}
 
-module Squeeze.Test.Data.FileCombinations(
+module Squeeze.Test.QuickCheck.Data.FileCombinations(
 -- * Constants
 	results
 ) where

@@ -22,7 +22,7 @@
  [@DESCRIPTION@]	Implements 'Test.QuickCheck.Arbitrary' for 'Data.CommandOptions.CommandOptions'.
 -}
 
-module Squeeze.Test.Data.CommandOptions(
+module Squeeze.Test.QuickCheck.Data.CommandOptions(
 -- * Types
 -- ** Type-synonyms
 	CommandOptions
@@ -30,7 +30,7 @@ module Squeeze.Test.Data.CommandOptions(
 
 import qualified	Test.QuickCheck
 import qualified	Squeeze.Data.CommandOptions	as Data.CommandOptions
-import			Squeeze.Test.Data.Verbosity()
+import			Squeeze.Test.QuickCheck.Data.Verbosity()
 
 #if !MIN_VERSION_base(4,8,0)
 import	Control.Applicative((<$>), (<*>))

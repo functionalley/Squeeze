@@ -20,7 +20,7 @@
  [@DESCRIPTION@]	Defines tests to dynamically verify the module "Squeeze.Squeeze" against arbitrary data.
 -}
 
-module Squeeze.Test.Squeeze(
+module Squeeze.Test.QuickCheck.Squeeze(
 -- * Constants
 	results
 ) where

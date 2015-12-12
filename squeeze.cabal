@@ -124,7 +124,7 @@ Executable squeeze
         if flag(llvm)
             GHC-options:	-fllvm
 
-Test-Suite quickCheck
+Test-Suite test
     Default-language:	Haskell2010
     GHC-options:	-Wall -fno-warn-tabs
     Hs-source-dirs:	src-test
@@ -133,10 +133,10 @@ Test-Suite quickCheck
 
 -- Required for 'cabal sdist'.
     Other-modules:
-        Squeeze.Test.Data.CommandOptions
-        Squeeze.Test.Data.FileCombinations
-        Squeeze.Test.Data.Verbosity
-        Squeeze.Test.Squeeze
+        Squeeze.Test.QuickCheck.Data.CommandOptions
+        Squeeze.Test.QuickCheck.Data.FileCombinations
+        Squeeze.Test.QuickCheck.Data.Verbosity
+        Squeeze.Test.QuickCheck.Squeeze
 
     Build-depends:
         base == 4.*,

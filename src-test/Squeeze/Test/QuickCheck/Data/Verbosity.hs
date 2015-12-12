@@ -21,7 +21,7 @@
  [@DESCRIPTION@]	Implements 'Test.QuickCheck.Arbitrary' for 'Distribution.Verbosity.Verbosity'.
 -}
 
-module Squeeze.Test.Data.Verbosity() where
+module Squeeze.Test.QuickCheck.Data.Verbosity() where
 
 import qualified	Distribution.Verbosity
 import qualified	Test.QuickCheck
