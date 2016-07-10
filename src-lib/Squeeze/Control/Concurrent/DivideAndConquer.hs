@@ -26,7 +26,7 @@
 
 module Squeeze.Control.Concurrent.DivideAndConquer(
 -- * Types
--- * Type-synonyms
+-- ** Type-synonyms
 --	TerminatedChannel,
 -- * Functions
 --	writeListToChan,
