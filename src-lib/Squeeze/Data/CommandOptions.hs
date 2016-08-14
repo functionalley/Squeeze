@@ -41,7 +41,7 @@ module Squeeze.Data.CommandOptions(
 	solutionSizeBounds,
 	deriveMinimumBytes,
 	subtractFile,
--- ** Constructors
+-- ** Constructor
 	mkCommandOptions
 ) where
 
