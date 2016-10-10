@@ -149,3 +149,5 @@
 * Added file **.ghci**.
 * Replaced use of module **ToolShed.Defaultable** with **Data.Default**.
 * Tested with **ghc-8.0.1**.
+## 1.0.4.10
+* Amended pre-processor directive **MIN_TOOL_VERSION_ghc** in **Main.hs**.

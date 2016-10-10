@@ -21,7 +21,7 @@
 
 Summary:	Finds the optimal subset of the specified files, to fit into a limited space, with minimal wastage
 Name:		squeeze
-Version:	1.0.4.9
+Version:	1.0.4.10
 Release:	1
 License:	GPLv3
 # From '/usr/share/doc/packages/rpm/GROUPS'.

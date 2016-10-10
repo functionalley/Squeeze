@@ -1,5 +1,5 @@
 {-# LANGUAGE CPP #-}
-#if MIN_TOOL_VERSION_ghc(8,0,1)
+#if defined(MIN_TOOL_VERSION_ghc) && MIN_TOOL_VERSION_ghc(8,0,1)
 {-# OPTIONS_GHC -freduction-depth=25 #-}
 #else
 {-# OPTIONS_GHC -fcontext-stack=25 #-}
