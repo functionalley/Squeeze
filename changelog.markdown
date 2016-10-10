@@ -148,3 +148,4 @@
 * Added file **.travis.yml** to control testing by <https://docs.travis-ci.com>.
 * Added file **.ghci**.
 * Replaced use of module **ToolShed.Defaultable** with **Data.Default**.
+* Tested with **ghc-8.0.1**.

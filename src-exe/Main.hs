@@ -1,5 +1,9 @@
 {-# LANGUAGE CPP #-}
-{-# OPTIONS_GHC -fcontext-stack=24 #-}
+#if MIN_TOOL_VERSION_ghc(8,0,1)
+{-# OPTIONS_GHC -freduction-depth=25 #-}
+#else
+{-# OPTIONS_GHC -fcontext-stack=25 #-}
+#endif
 {-
 	Copyright (C) 2010-2015 Dr. Alistair Ward
 
@@ -179,12 +183,12 @@ main	= do
 				compiler	= System.Info.compilerName ++ "-" ++ Data.List.intercalate "." (map show $ Data.Version.versionBranch System.Info.compilerVersion)
 
 			printUsage	= Text.Printf.hPrintf System.IO.stderr (
-				"Usage:\t%s  %s\n\nEBNF argument-format:" ++ concat (
-					replicate 9 "\n\t%-22s = %s;"	-- Argument-types & their EBNF-definition.
-				) ++ "\n\nE.g.\n\t%s\n\t%s\n\t%s\n"
+				showString "Usage:\t%s  [<File-path> ...]\n\nEBNF argument-format:" $ showString (
+					concat $ replicate 9 "\n\t%-22s = %s;"	-- Argument-types & their EBNF-definition.
+				) "\n\nE.g.\n\t%s\n\t%s\n\t%s\n"
 			 ) (
 				G.usageInfo progName optDescrList
-			 ) "[<File-path> ...]" "Bool" "\"True\" | \"False\"\t(* case-sensitive *)" "ContinuousDistribution" "LogNormalDistribution location scale^2" "DiscreteDistribution" "PoissonDistribution lambda" "File-path" (
+			 ) "Bool" "\"True\" | \"False\"\t(* case-sensitive *)" "ContinuousDistribution" "LogNormalDistribution location scale^2" "DiscreteDistribution" "PoissonDistribution lambda" "File-path" (
 				"File-name ('" ++ [System.FilePath.pathSeparator] ++ "' File-name)*"
 			 ) "Float" "Int ('.' Int)?" "Int" "[0-9]+" "lambda" "Float\t(* the mean & variance of the distribution *)" "location" "Float\t(* the mean of the log of the distribution *)" "scale^2" "Float\t(* the variance of the log of the distribution *)" (
 				progName ++ " --verbosity=Verbose -M 700000000 *.ogg +RTS -N\t#Find the best-fit for the globbed file-names, into the space available on a CD, using multiple CPU-cores where available."
@@ -192,7 +196,7 @@ main	= do
 				progName ++ " -r --testPerformanceContinuous='(100, LogNormalDistribution " ++ show (log ((fromIntegral defaultMaximumBytes / 12) / sqrt 2) :: Float) {-location-} ++ " " ++ show (log 2 :: Float) {-scale^2-} ++ ")'\t#Test performance."
 			 ) (
 				progName ++ " -r --testPerformanceDiscrete='(100, PoissonDistribution " ++ show (defaultMaximumBytes `div` 12) {-lambda-} ++ ")'\t#Test performance."
-			 ) >> System.Exit.exitSuccess	-- CAVEAT: requires increase to default context-stack.
+			 ) >> System.Exit.exitSuccess	-- CAVEAT: requires increase to default context-stack; see GHC-option at top of file.
 
 	args	<- System.Environment.getArgs
 
