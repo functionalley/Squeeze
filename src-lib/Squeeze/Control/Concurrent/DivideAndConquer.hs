@@ -40,7 +40,7 @@ import qualified	System.IO.Unsafe
 import qualified	Control.Monad
 import qualified	Data.Maybe
 
-#if !MIN_VERSION_base(4,8,0)
+#if !defined(MIN_VERSION_base) || !MIN_VERSION_base(4,8,0)
 import	Control.Applicative((<$>), (<*>))
 #endif
 

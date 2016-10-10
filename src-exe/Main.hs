@@ -62,7 +62,7 @@ import qualified	ToolShed.Data.List
 import qualified	ToolShed.SelfValidate
 import qualified	ToolShed.System.TimeAction
 
-#if !MIN_VERSION_base(4,8,0)
+#if !defined(MIN_VERSION_base) || !MIN_VERSION_base(4,8,0)
 import	Control.Applicative((<$>), (<*>))
 #endif
 
