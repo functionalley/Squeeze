@@ -154,3 +154,5 @@
 ## 1.0.4.11
 * Checked pre-processor directives are defined.
 ## 1.0.4.12
+* Re-factored pre-processor directive in **Main.hs**.
+## 1.0.4.13
