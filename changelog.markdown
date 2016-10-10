@@ -153,3 +153,4 @@
 * Amended pre-processor directive **MIN_TOOL_VERSION_ghc** in **Main.hs**.
 ## 1.0.4.11
 * Checked pre-processor directives are defined.
+## 1.0.4.12
