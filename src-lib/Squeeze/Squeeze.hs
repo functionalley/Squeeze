@@ -1,5 +1,5 @@
 {-
-	Copyright (C) 2010-2015 Dr. Alistair Ward
+	Copyright (C) 2010-2016 Dr. Alistair Ward
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -82,12 +82,14 @@ findCombinations (minimumCombinationSize, maximumCombinationSize)	= filter (
 		)
 		where
 			binaryChoice :: Data.FileCombination.FileCombination -> [Data.FileCombination.FileCombination] -> [Data.FileCombination.FileCombination]
-			binaryChoice combinationExcluding
-				| Data.FileCombination.hasSizeBy (<= maximumCombinationSize) combinationIncluding	= (combinationExcluding :) . (combinationIncluding :)
-				| otherwise										= (combinationExcluding :)
+			binaryChoice combinationExcluding combinations
+				| Data.FileCombination.hasSizeBy (> maximumCombinationSize) combinationIncluding	= combinations'
+				| otherwise										= combinationIncluding : combinations'
 				where
 					combinationIncluding :: Data.FileCombination.FileCombination
 					combinationIncluding	= Data.FileCombination.prepend fileSizeAndPath combinationExcluding
+
+					combinations'	= combinationExcluding : combinations
 
 -- | Orders the files by decreasing size, calls 'findCombinations', calls 'Data.FileCombination.risingFilter' to select progressively better solutions.
 findBestFit

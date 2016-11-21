@@ -1,5 +1,5 @@
 {-
-	Copyright (C) 2010-2015 Dr. Alistair Ward
+	Copyright (C) 2010-2016 Dr. Alistair Ward
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ getPath	= snd
 
 -- | Sum the 'FileSize's in the specified list.
 aggregateSize :: [FileSizeAndPath] -> FileSize
-aggregateSize	= foldr ((+) . getSize) 0
+aggregateSize	= Data.List.foldl' (\acc (fileSize, _) -> acc + fileSize) 0
 
 {- |
 	* Returns the cumulative sequence of sizes, as each file is prepended to the specified list.

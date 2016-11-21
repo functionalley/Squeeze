@@ -1,5 +1,5 @@
 {-
-	Copyright (C) 2010 Dr. Alistair Ward
+	Copyright (C) 2010-2016 Dr. Alistair Ward
 
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -100,9 +100,12 @@ prepend
 	:: Data.File.FileSizeAndPath	-- ^ The new path to prepend to the incumbent file-combination.
 	-> FileCombination		-- ^ The incumbent combination of files.
 	-> FileCombination
-prepend (fileSize, filePath) fileCombination	= MkFileCombination {
-	getAggregateFileSize	= fileSize + getAggregateFileSize fileCombination,
-	getFilePathList		= filePath : getFilePathList fileCombination
+prepend (fileSize, filePath) MkFileCombination {
+	getAggregateFileSize	= aggregateFileSize,
+	getFilePathList		= filePathList
+} = MkFileCombination {
+	getAggregateFileSize	= fileSize + aggregateFileSize,
+	getFilePathList		= filePath : filePathList
 }
 
 -- | Predicate used to determine whether a specific file-combination matches a size-related requirement.
@@ -111,7 +114,7 @@ hasSizeBy
 	:: (Data.File.FileSize -> Bool)	-- ^ The predicate.
 	-> FileCombination		-- ^ The input datum to be tested.
 	-> Bool
-hasSizeBy predicate	= predicate . getAggregateFileSize
+hasSizeBy predicate MkFileCombination { getAggregateFileSize = aggregateFileSize }	= predicate aggregateFileSize
 
 -- | Progressively raises the selection-criterion as each match is found, to produce monotonically increasing file-combinations.
 risingFilter
@@ -119,11 +122,9 @@ risingFilter
 	-> [FileCombination]	-- ^ The input list of files to filter.
 	-> [FileCombination]	-- ^ The resulting list of files, which have met rising criterion.
 risingFilter _ []	= []
-risingFilter minimumSize (x : xs)
-	| aggregateFileSize >= minimumSize	= x : risingFilter aggregateFileSize xs
-	| otherwise				= risingFilter minimumSize xs
-	where
-		aggregateFileSize	= getAggregateFileSize x
+risingFilter minimumSize (fileCombination@MkFileCombination { getAggregateFileSize = aggregateFileSize } : fileCombinations)
+	| aggregateFileSize >= minimumSize	= fileCombination : risingFilter aggregateFileSize fileCombinations
+	| otherwise				= risingFilter minimumSize fileCombinations
 
 {- |
 	* Merges two lists of monotonically increasing values, into a single monotonically increasing list, by dropping values which compare less than results already found.
@@ -139,16 +140,14 @@ risingMerge
 risingMerge cmp	= slave nullFileCombination	where
 	lessThan bar	= (== LT) . (`cmp` bar)
 
-	slave bar [] r	= dropWhile (lessThan bar) r
-	slave bar l []	= dropWhile (lessThan bar) l
-	slave _ (x : xs) (y : ys)
-		| o == GT	= x : slave x xs ys
-		| o == LT	= y : slave y xs ys
-		| otherwise	= x : y : slave x xs ys
-		where
-			o	= x `cmp` y
+	slave bar [] r			= dropWhile (lessThan bar) r
+	slave bar l []			= dropWhile (lessThan bar) l
+	slave _ (x : xs) (y : ys)	= case x `cmp` y of
+		GT	-> x : slave x xs ys
+		LT	-> y : slave y xs ys
+		_	-> x : y : slave x xs ys
 
--- Compares two /file-combination/s by their aggregate file-size.
+-- | Compares two /file-combination/s by their aggregate file-size.
 comparingAggregateFileSize :: FileCombination -> FileCombination -> Ordering
 comparingAggregateFileSize	= Data.Ord.comparing getAggregateFileSize
 
