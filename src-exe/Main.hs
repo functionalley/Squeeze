@@ -1,5 +1,5 @@
 {-# LANGUAGE CPP #-}
-#ifdef MIN_TOOL_VERSION_ghc
+#ifdef MIN_TOOL_VERSION_ghc	/* CAVEAT: early versions of Cabal don't define this */
 #if MIN_TOOL_VERSION_ghc(8,0,1)
 {-# OPTIONS_GHC -freduction-depth=25 #-}
 #endif
