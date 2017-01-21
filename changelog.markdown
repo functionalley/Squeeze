@@ -157,3 +157,4 @@
 * Re-factored pre-processor directive in **Main.hs**.
 ## 1.0.4.13
 * Performance-improvements.
+* Added default RTS-options to **squeeze.cabal**.

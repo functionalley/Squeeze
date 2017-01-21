@@ -119,7 +119,7 @@ Executable squeeze
         GHC-options:	-threaded
 
     if impl(ghc >= 7.0)
-        GHC-options:	-rtsopts
+        GHC-options:	-rtsopts "-with-rtsopts=-N -H100M"
 
         if flag(llvm)
             GHC-options:	-fllvm
