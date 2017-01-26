@@ -119,10 +119,11 @@ Executable squeeze
         GHC-options:	-threaded
 
     if impl(ghc >= 7.0)
-        GHC-options:	-rtsopts "-with-rtsopts=-N -H100M"
-
         if flag(llvm)
             GHC-options:	-fllvm
+
+        if flag(threaded)
+            GHC-options:	-rtsopts "-with-rtsopts=-N -H100M"
 
 Test-Suite test
     Default-language:	Haskell2010
