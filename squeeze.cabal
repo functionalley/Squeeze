@@ -110,20 +110,20 @@ Executable squeeze
         squeeze,
         toolshed >= 0.17
 
-    if impl(ghc >= 7.4.1)
-        GHC-prof-options:	-fprof-auto -fprof-cafs
-    else
-        GHC-prof-options:	-auto-all -caf-all
-
-    if flag(threaded)
-        GHC-options:	-threaded
-
     if impl(ghc >= 7.0)
         if flag(llvm)
             GHC-options:	-fllvm
 
         if flag(threaded)
             GHC-options:	-rtsopts "-with-rtsopts=-N -H100M"
+
+    if impl(ghc >= 7.4.1)
+        GHC-prof-options:	-fprof-auto -fprof-cafs -with-rtsopts=-H100M
+    else
+        GHC-prof-options:	-auto-all -caf-all
+
+    if flag(threaded)
+        GHC-options:	-threaded
 
 Test-Suite test
     Default-language:	Haskell2010
