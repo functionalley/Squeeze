@@ -158,3 +158,4 @@
 ## 1.0.4.13
 * Performance-improvements.
 * Added default RTS-options to **squeeze.cabal**.
+* Replaced 'Data.List.genericLength' with the more efficient @fromIntegral . length@.

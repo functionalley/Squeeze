@@ -34,7 +34,7 @@ import qualified	Test.QuickCheck
 instance Test.QuickCheck.Arbitrary Data.FileCombination.FileCombination	where
 	arbitrary	= do
 		filePathList		<- Data.List.nub `fmap` (Test.QuickCheck.elements [0 .. 99] >>= Test.QuickCheck.vector)
-		aggregateFileSize	<- Test.QuickCheck.elements [0 .. Data.List.genericLength filePathList]	-- Assume files of size either zero or one byte.
+		aggregateFileSize	<- Test.QuickCheck.elements [0 .. fromIntegral $ length filePathList]	-- Assume files of size either zero or one byte.
 
 		return $ Data.FileCombination.mkFileCombination aggregateFileSize filePathList
 
