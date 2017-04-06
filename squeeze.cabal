@@ -86,8 +86,12 @@ Library
     else
         GHC-prof-options:	-auto-all -caf-all
 
-    if impl(ghc >= 7.0) && flag(llvm)
-        GHC-options:	-fllvm
+    if impl(ghc >= 7.0)
+        if flag(llvm)
+            GHC-options:	-fllvm
+
+        if impl(ghc >= 8.0)
+            GHC-options:	-Wredundant-constraints
 
 Executable squeeze
     Default-language:	Haskell2010
@@ -117,6 +121,9 @@ Executable squeeze
         if flag(threaded)
             GHC-options:	-rtsopts "-with-rtsopts=-N -H100M"
 
+        if impl(ghc >= 8.0)
+            GHC-options:	-Wredundant-constraints
+
     if impl(ghc >= 7.4.1)
         GHC-prof-options:	-fprof-auto -fprof-cafs -with-rtsopts=-H100M
     else
@@ -145,4 +152,7 @@ Test-Suite test
         QuickCheck >= 2.4,
         squeeze,
         toolshed >= 0.17
+
+    if impl(ghc >= 8.0)
+        GHC-options:	-Wredundant-constraints
 
