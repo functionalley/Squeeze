@@ -64,7 +64,7 @@ results	= mapM Test.QuickCheck.quickCheckResult [prop_totalCombinations, prop_fi
 		fileSizeAndPathList	= mkFileSizeAndPathList integers
 
 	prop_uniqueFileNames integers	= Test.QuickCheck.label "prop_uniqueFileNames" . all (
-		all ((== 1) . length) . ToolShed.Data.Foldable.gather . Data.FileCombination.getFilePathList
+		not . ToolShed.Data.Foldable.hasDuplicates . Data.FileCombination.getFilePathList
 	 ) $ Squeeze.findBestFit (0, fromIntegral (maxBound :: Int)) fileSizeAndPathList	where
 		fileSizeAndPathList	= mkFileSizeAndPathList integers
 
