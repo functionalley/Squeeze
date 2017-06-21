@@ -67,7 +67,7 @@ run commandOptions fileCount probabilityDistribution	= do
 			ceiling :: Double -> Integer	-- File-sizes are integral.
 		 ) $ Factory.Math.Probability.generatePopulation probabilityDistribution randomGen
 
-	Control.Monad.when (Data.CommandOptions.getVerbosity commandOptions > minBound) . System.IO.hPutStrLn System.IO.stderr $ Data.List.intercalate "\n" logFile
+	Control.Monad.unless (Data.CommandOptions.getVerbosity commandOptions == minBound) . System.IO.hPutStrLn System.IO.stderr $ Data.List.intercalate "\n" logFile
 
 	Squeeze.distributeAndFindBestFit commandOptions acceptedFileSizeAndPathList
 
