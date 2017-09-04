@@ -149,15 +149,21 @@
 * Added file **.ghci**.
 * Replaced use of module **ToolShed.Defaultable** with **Data.Default**.
 * Tested with **ghc-8.0.1**.
+
 ## 1.0.4.10
 * Amended pre-processor directive **MIN_TOOL_VERSION_ghc** in **Main.hs**.
+
 ## 1.0.4.11
 * Checked pre-processor directives are defined.
+
 ## 1.0.4.12
 * Re-factored pre-processor directive in **Main.hs**.
+
 ## 1.0.4.13
 * Performance-improvements.
 * Added default RTS-options to **squeeze.cabal**.
 * Replaced 'Data.List.genericLength' with the more efficient @fromIntegral . length@.
 * Removed dependency on **Distribution.Package.PackageName**
+
+## 1.0.4.14
 
