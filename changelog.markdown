@@ -159,3 +159,5 @@
 * Performance-improvements.
 * Added default RTS-options to **squeeze.cabal**.
 * Replaced 'Data.List.genericLength' with the more efficient @fromIntegral . length@.
+* Removed dependency on **Distribution.Package.PackageName**
+
