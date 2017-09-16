@@ -45,7 +45,7 @@ source-repository head
     type:	git
     location:	https://github.com/functionalley/Squeeze
 
--- Enable using: 'cabal configure -f llvm'.
+-- Enable using: 'runhaskell Setup configure -f llvm --verbose'.
 flag llvm
     Description:	Whether the 'llvm' compiler-backend has been installed and is required for code-generation.
     Manual:		True
