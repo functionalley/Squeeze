@@ -87,7 +87,7 @@ mkFileCombination fileSize filePathList
 		fileCombination	= MkFileCombination fileSize filePathList
 
 -- | Construct a 'FileCombination' from a single 'Data.File.FileSizeAndPath'.
-singleton ::  Data.File.FileSizeAndPath -> FileCombination
+singleton :: Data.File.FileSizeAndPath -> FileCombination
 singleton (fileSize, filePath)	= mkFileCombination fileSize [filePath]
 
 {- |

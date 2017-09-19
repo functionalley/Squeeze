@@ -107,7 +107,7 @@ subtractFile
 	-> CommandOptions ratio
 subtractFile fileSize commandOptions
 	| fileSize < 0		= error $ "Squeeze.Data.CommandOptions.subtractFile:\tnegative file-size=" ++ show fileSize
-	| maximumBytes' < 0	= error $ "Squeeze.Data.CommandOptions.subtractFile:\tfile-size=" ++ show fileSize  ++ " > maximum=" ++ show maximumBytes
+	| maximumBytes' < 0	= error $ "Squeeze.Data.CommandOptions.subtractFile:\tfile-size=" ++ show fileSize ++ " > maximum=" ++ show maximumBytes
 	| otherwise		= commandOptions {
 		getMaximumBytes		= maximumBytes',
 		getMinimumUsageRatio	= if maximumBytes' == 0

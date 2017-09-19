@@ -42,10 +42,10 @@ results	= mapM Test.QuickCheck.quickCheckResult [prop_totalCombinations, prop_fi
 	mkFileSizeAndPathList	= take 12 . Data.List.nubBy (ToolShed.Data.List.equalityBy snd) . map (toInteger . abs &&& show)	-- CAVEAT: may be shorter than requested.
 
 	prop_totalCombinations, prop_fileSizeBounds, prop_allFiles, prop_monotonicFileSize, prop_uniqueFileNames :: [Integer] -> Test.QuickCheck.Property
-	prop_totalCombinations integers =  Test.QuickCheck.label "prop_totalCombinations" $ (length . Data.List.nub . Squeeze.findCombinations (0, fromIntegral (maxBound :: Int)) $ Data.File.orderByDecreasingSize fileSizeAndPathList) == 2 ^ length fileSizeAndPathList where
+	prop_totalCombinations integers = Test.QuickCheck.label "prop_totalCombinations" $ (length . Data.List.nub . Squeeze.findCombinations (0, fromIntegral (maxBound :: Int)) $ Data.File.orderByDecreasingSize fileSizeAndPathList) == 2 ^ length fileSizeAndPathList where
 		fileSizeAndPathList	= mkFileSizeAndPathList integers
 
-	prop_fileSizeBounds integers	=  Test.QuickCheck.label "prop_fileSizeBounds" . all ((`Factory.Data.Interval.elem'` fileSizeBounds) . Data.FileCombination.getAggregateFileSize) . Squeeze.findCombinations fileSizeBounds $ Data.File.orderByDecreasingSize fileSizeAndPathList	where
+	prop_fileSizeBounds integers	= Test.QuickCheck.label "prop_fileSizeBounds" . all ((`Factory.Data.Interval.elem'` fileSizeBounds) . Data.FileCombination.getAggregateFileSize) . Squeeze.findCombinations fileSizeBounds $ Data.File.orderByDecreasingSize fileSizeAndPathList	where
 		fileSizeAndPathList	= mkFileSizeAndPathList integers
 
 		fileSizeBounds :: Factory.Data.Interval.Interval Data.File.FileSize
