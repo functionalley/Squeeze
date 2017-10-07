@@ -27,12 +27,12 @@ module Squeeze.Test.QuickCheck.Squeeze(
 
 import			Control.Arrow((&&&))
 import qualified	Data.List
+import qualified	Data.List.Extra
 import qualified	Factory.Data.Interval
 import qualified	Squeeze.Data.File		as Data.File
 import qualified	Squeeze.Data.FileCombination	as Data.FileCombination
 import qualified	Squeeze.Squeeze			as Squeeze
 import qualified	Test.QuickCheck
-import qualified	ToolShed.Data.Foldable
 import qualified	ToolShed.Data.List
 
 -- | The constant test-results for this data-type.
@@ -64,7 +64,7 @@ results	= mapM Test.QuickCheck.quickCheckResult [prop_totalCombinations, prop_fi
 		fileSizeAndPathList	= mkFileSizeAndPathList integers
 
 	prop_uniqueFileNames integers	= Test.QuickCheck.label "prop_uniqueFileNames" . all (
-		not . ToolShed.Data.Foldable.hasDuplicates . Data.FileCombination.getFilePathList
+		not . Data.List.Extra.anySame . Data.FileCombination.getFilePathList
 	 ) $ Squeeze.findBestFit (0, fromIntegral (maxBound :: Int)) fileSizeAndPathList	where
 		fileSizeAndPathList	= mkFileSizeAndPathList integers
 
