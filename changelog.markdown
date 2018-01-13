@@ -165,6 +165,4 @@
 * Replaced 'Data.List.genericLength' with the more efficient @fromIntegral . length@.
 * Removed dependency on **Distribution.Package.PackageName**
 
-## 1.0.4.14
-
-## 1.0.4.15
+## 1.0.4.16

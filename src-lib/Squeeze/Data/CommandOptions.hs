@@ -70,7 +70,7 @@ instance Fractional f => Data.Default.Default (CommandOptions f)	where
 		getVerbosity		= Distribution.Verbosity.normal
 	}
 
-instance (Ord ratio, Real ratio) => ToolShed.SelfValidate.SelfValidator (CommandOptions ratio)	where
+instance Real ratio => ToolShed.SelfValidate.SelfValidator (CommandOptions ratio)	where
 	getErrors commandOptions	= map snd $ filter (($ commandOptions) . fst) [
 		((< 0) . getMaximumBytes,	"invalid maximumBytes; " ++ show (getMaximumBytes commandOptions)),
 		((< 0) . getMinimumUsageRatio,	"invalid minimumUsageRatio; " ++ show (realToFrac $ getMinimumUsageRatio commandOptions :: Double)),
@@ -79,10 +79,7 @@ instance (Ord ratio, Real ratio) => ToolShed.SelfValidate.SelfValidator (Command
 
 -- | Smart constructor.
 mkCommandOptions
-	:: (
-		Ord	ratio,
-		Real	ratio
-	)
+	:: Real ratio
 	=> Bool
 	-> Data.File.FileSize
 	-> Maybe Int
