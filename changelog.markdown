@@ -40,7 +40,7 @@
 * Added manually controlled flag "**llvm**" to the *.cabal*-file.
 * Replaced references to the module "**ToolShed.Package**" with "**Distribution.Package**".
 * Reacted to the creation of module "**ToolShed.Defaultable**".
-* Uploaded to [Hackage](http://hackage.haskell.org/package/squeeze).
+* Uploaded to [Hackage](https://hackage.haskell.org/package/squeeze).
 
 ## 1.0.2.0
 * Reimplemented `Squeeze.File.aggregateSize` using `foldr` rather than `foldl`.

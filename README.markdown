@@ -11,7 +11,7 @@ It can be built and installed using [Cabal](https://www.haskell.org/cabal/users-
 
 ## Documentation
 * The directory "**man/**" contains the documentation.
-* More information about this application can be found at [Squeeze](http://functionalley.eu/Squeeze/squeeze.html).
+* More information about this application can be found at [Squeeze](https://functionalley.eu/Squeeze/squeeze.html).
 
 ## License
 

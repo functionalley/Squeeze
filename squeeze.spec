@@ -26,8 +26,8 @@ Release:	1
 License:	GPLv3
 # From '/usr/share/doc/packages/rpm/GROUPS'.
 Group:		Applications/File
-Source0:	http://functionalley.eu/Downloads/sdist/%tarBall
-URL:		http://functionalley.eu/Squeeze/%name.html
+Source0:	https://functionalley.eu/Downloads/sdist/%tarBall
+URL:		https://functionalley.eu/Squeeze/%name.html
 Prefix:		/usr
 BuildRequires:	haskell-platform
 
