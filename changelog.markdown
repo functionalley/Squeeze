@@ -1,4 +1,4 @@
-# 2010-11-18 Dr. Alistair Ward <squeeze@functionalley.eu>
+# 2010-11-18 Dr. Alistair Ward <squeeze@functionalley.com>
 
 ## 1.0.0.0
 * First version of the package.
@@ -166,3 +166,6 @@
 * Removed dependency on **Distribution.Package.PackageName**
 
 ## 1.0.4.16
+
+## 1.0.4.17
+Changed references to author's domain-name.

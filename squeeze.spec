@@ -21,13 +21,13 @@
 
 Summary:	Finds the optimal subset of the specified files, to fit into a limited space, with minimal wastage
 Name:		squeeze
-Version:	1.0.4.16
+Version:	1.0.4.17
 Release:	1
 License:	GPLv3
 # From '/usr/share/doc/packages/rpm/GROUPS'.
 Group:		Applications/File
-Source0:	https://functionalley.eu/Downloads/sdist/%tarBall
-URL:		https://functionalley.eu/Squeeze/%name.html
+Source0:	https://functionalley.com/Downloads/sdist/%tarBall
+URL:		https://functionalley.com/Squeeze/%name.html
 Prefix:		/usr
 BuildRequires:	haskell-platform
 
@@ -62,6 +62,6 @@ rm -rf -- '%_builddir/%package/' '%buildroot/'	# Only the '.rpm' is required.
 %attr(0644, root, root)	%doc	%_mandir/man1/%name.1.gz
 
 %changelog
-* Wed May 09 2012	Alistair Ward	<squeeze@functionalley.eu>	1.0.2.4-1
+* Wed May 09 2012	Alistair Ward	<squeeze@functionalley.com>	1.0.2.4-1
 First cut.
 

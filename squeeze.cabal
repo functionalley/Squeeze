@@ -14,7 +14,7 @@
 -- along with Squeeze.  If not, see <http://www.gnu.org/licenses/>.
 
 Name:		squeeze
-Version:	1.0.4.16
+Version:	1.0.4.17
 Cabal-version:	>= 1.10
 Copyright:	(C) 2010-2015 Dr. Alistair Ward
 License:	GPL
@@ -25,10 +25,10 @@ Synopsis:	A file-packing application.
 Build-type:	Simple
 Description:	Returns progressively better subsets of the specified files, selected to fit into a limited space, without wasting more than the specific ratio.
 Category:	Application, Utils
-Tested-with:	GHC == 7.4, GHC == 7.6, GHC == 7.8, GHC == 7.10, GHC == 8.0, GHC == 8.2
-Homepage:	https://functionalley.eu/Squeeze/squeeze.html
-Maintainer:	mailto:squeeze@functionalley.eu
-Bug-reports:	mailto:squeeze@functionalley.eu
+Tested-with:	GHC == 7.4, GHC == 7.6, GHC == 7.8, GHC == 7.10, GHC == 8.0, GHC == 8.2, GHC == 8.4, GHC == 8.6
+Homepage:	https://functionalley.com/Squeeze/squeeze.html
+Maintainer:	mailto:squeeze@functionalley.com
+Bug-reports:	mailto:squeeze@functionalley.com
 
 -- None of these files are needed at run-time.
 Extra-source-files:

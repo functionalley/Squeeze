@@ -1,13 +1,13 @@
 Package:	squeeze
-Version:	1.0.4.16-1
+Version:	1.0.4.17-1
 Section:	utils
 Priority:	optional
 Architecture:	amd64
 Depends:	libc6
 Installed-size:	2576
-Maintainer:	Dr. Alistair Ward <squeeze@functionalley.eu>
+Maintainer:	Dr. Alistair Ward <squeeze@functionalley.com>
 Provides:
-Homepage:	https://functionalley.eu/Squeeze/squeeze.html
+Homepage:	https://functionalley.com/Squeeze/squeeze.html
 Description:	Finds the optimal subset of the specified files, to fit into a limited space.
  Returns progressively better subsets of the specified files,
  to fit into a limited space, without wasting more than the specific ratio.
