@@ -102,6 +102,7 @@ Executable squeeze
 -- Required for 'cabal sdist'.
     Other-modules:
         Squeeze.Test.Performance
+        Paths_squeeze
 
     Build-depends:
         base == 4.*,
