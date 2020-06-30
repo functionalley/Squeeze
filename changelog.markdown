@@ -169,3 +169,6 @@
 
 ## 1.0.4.17
 Changed references to author's domain-name.
+
+## 1.0.4.18
+Updated list of test-compilers.
