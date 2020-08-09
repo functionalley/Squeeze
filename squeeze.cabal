@@ -14,7 +14,7 @@
 -- along with Squeeze.  If not, see <http://www.gnu.org/licenses/>.
 
 Name:		squeeze
-Version:	1.0.4.18
+Version:	1.0.4.19
 Cabal-version:	>= 1.10
 Copyright:	(C) 2010-2015 Dr. Alistair Ward
 License:	GPL

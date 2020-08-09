@@ -172,3 +172,7 @@ Changed references to author's domain-name.
 
 ## 1.0.4.18
 Updated list of test-compilers.
+
+## 1.0.4.19
+Replaced module **Distribution.Verbosity** with **Squeeze.Data.Verbosity**.
+
