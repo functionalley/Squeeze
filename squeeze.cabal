@@ -65,6 +65,7 @@ Library
         Squeeze.Data.CommandOptions
         Squeeze.Data.File
         Squeeze.Data.FileCombination
+        Squeeze.Data.Verbosity
         Squeeze.Squeeze
 
 -- Required for 'cabal sdist'.

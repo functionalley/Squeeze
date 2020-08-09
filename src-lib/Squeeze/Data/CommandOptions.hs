@@ -47,18 +47,18 @@ module Squeeze.Data.CommandOptions(
 
 import			Control.Arrow((&&&))
 import qualified	Data.Default
-import qualified	Distribution.Verbosity
 import qualified	Factory.Data.Interval
 import qualified	Squeeze.Data.File	as Data.File
+import qualified	Squeeze.Data.Verbosity	as Data.Verbosity
 import qualified	ToolShed.SelfValidate
 
 -- | Declares a record to contain command-line options.
 data CommandOptions ratio	= MkCommandOptions {
-	getIncludeEmpty		:: Bool,				-- ^ Whether empty directories or files should be included in any solution.
-	getMaximumBytes		:: Data.File.FileSize,			-- ^ The maximum space (in bytes) available in which to store a subset of the specified files.
-	getMaybeRandomSeed	:: Maybe Int,				-- ^ Optionally seed the random-number generator to produce a repeatable pseudo-random sequence.
-	getMinimumUsageRatio	:: ratio,				-- ^ The minimum acceptable usage-ratio of 'getMaximumBytes'.
-	getVerbosity		:: Distribution.Verbosity.Verbosity	-- ^ Set the threshold for ancillary information-output.
+	getIncludeEmpty		:: Bool,			-- ^ Whether empty directories or files should be included in any solution.
+	getMaximumBytes		:: Data.File.FileSize,		-- ^ The maximum space (in bytes) available in which to store a subset of the specified files.
+	getMaybeRandomSeed	:: Maybe Int,			-- ^ Optionally seed the random-number generator to produce a repeatable pseudo-random sequence.
+	getMinimumUsageRatio	:: ratio,			-- ^ The minimum acceptable usage-ratio of 'getMaximumBytes'.
+	getVerbosity		:: Data.Verbosity.Verbosity	-- ^ Set the threshold for ancillary information-output.
 } deriving (Eq, Show)
 
 instance Fractional f => Data.Default.Default (CommandOptions f)	where
@@ -67,7 +67,7 @@ instance Fractional f => Data.Default.Default (CommandOptions f)	where
 		getMaximumBytes		= 4700000000,	-- DVD-size; just under 4.4GiB.
 		getMaybeRandomSeed	= Nothing,
 		getMinimumUsageRatio	= 9 / 10,	-- 90% full.
-		getVerbosity		= Distribution.Verbosity.normal
+		getVerbosity		= Data.Default.def
 	}
 
 instance Real ratio => ToolShed.SelfValidate.SelfValidator (CommandOptions ratio)	where
@@ -84,7 +84,7 @@ mkCommandOptions
 	-> Data.File.FileSize
 	-> Maybe Int
 	-> ratio
-	-> Distribution.Verbosity.Verbosity
+	-> Data.Verbosity.Verbosity
 	-> CommandOptions ratio
 mkCommandOptions includeEmpty maximumBytes maybeRandomSeed minimumUsageRatio verbosity
 	| ToolShed.SelfValidate.isValid commandOptions	= commandOptions
